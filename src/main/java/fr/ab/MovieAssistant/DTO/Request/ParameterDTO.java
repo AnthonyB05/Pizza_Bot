@@ -2,22 +2,13 @@ package fr.ab.MovieAssistant.DTO.Request;
 
 
 public class ParameterDTO{
-    private String genre;
-    private String film;
+    private String base;
 
-    public String getGenre() {
-        return genre;
+    public String getBase() {
+        return base;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public String getFilm() {
-        return film;
-    }
-
-    public void setFilm(String film) {
-        this.film = film;
+    public void setBase(String base) {
+        this.base = base;
     }
 }
