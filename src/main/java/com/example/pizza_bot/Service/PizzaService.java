@@ -1,6 +1,8 @@
 package com.example.pizza_bot.Service;
 
 import com.example.pizza_bot.DTO.Request.QueryRequestDTO;
+import com.example.pizza_bot.DTO.Response.Message.Carousel.CarouselSelectDTO;
+import com.example.pizza_bot.DTO.Response.Message.Carousel.ItemDTO;
 import com.example.pizza_bot.DTO.Response.Message.MessageDTO;
 import com.example.pizza_bot.DTO.Response.Message.SimpleResponse.SimpleResponseDTO;
 import com.example.pizza_bot.DTO.Response.Message.SimpleResponse.SimpleResponsesDTO;
@@ -33,7 +35,7 @@ public class PizzaService {
         return webhookReponseDTO;
     }
 
-    /*private WebhookReponseDTO getPizzaByBase(String toLowerCase) {
+/*    private WebhookReponseDTO getPizzaByBase(String toLowerCase) {
         WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
 
         List<MessageDTO> messageDTOList = new ArrayList<>();
@@ -46,17 +48,14 @@ public class PizzaService {
         messageSimpleResponse.setSimpleResponses(simpleResponsesDTO);
         messageDTOList.add(messageSimpleResponse);
 
+        MessageDTO messageCarousel = new MessageDTO();
+        messageCarousel.setPlatform("ACTIONS_ON_GOOGLE");
+        CarouselSelectDTO carouselSelectDTO = new CarouselSelectDTO();
+        List<ItemDTO> itemDTOList = new ArrayList<>();
+
         if (toLowerCase.equals("tomate")) {
-            for (String pizza : tomate) {
-                MessageDTO messageSuggestion = new MessageDTO();
-                messageSuggestion.setPlatform("ACTIONS_ON_GOOGLE");
-                SuggestionsDTO suggestionsDTO = new SuggestionsDTO();
-                SuggestionDTO suggestionDTO = new SuggestionDTO();
-                suggestionDTO.setTitle(pizza);
-                suggestionsDTO.setSuggestions(List.of(suggestionDTO));
-                messageSuggestion.setSuggestions(suggestionsDTO);
-                messageDTOList.add(messageSuggestion);
-            }
+
+
         } else if (toLowerCase.equals("crème")) {
             for (String pizza : creme) {
                 MessageDTO messageSuggestion = new MessageDTO();
