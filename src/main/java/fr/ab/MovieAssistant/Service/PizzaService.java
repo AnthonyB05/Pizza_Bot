@@ -29,14 +29,14 @@ public class PizzaService {
         if (queryRequestDTO.getQueryResult().getParameters().getBase() == null) {
             List<ContextDTO> context = queryRequestDTO.getQueryResult().getOutputContexts();
             for (ContextDTO contextDTO : context) {
-                if(contextDTO.getParameters().containsKey("OPTION")) {
-                    return this.getExplainPizza(contextDTO);
+                if (contextDTO.getParameters().containsKey("OPTION")) {
+                    return this.getChoice(contextDTO);
                 }
             }
             return getbase(false);
         }
 
-        if(queryRequestDTO.getQueryResult().getParameters().getBase().equals("")){
+        if (queryRequestDTO.getQueryResult().getParameters().getBase().equals("")) {
             return getbase(false);
         }
 
@@ -44,7 +44,21 @@ public class PizzaService {
 
     }
 
-    private WebhookReponseDTO getExplainPizza(ContextDTO contextDTO) {
+    private WebhookReponseDTO getChoice(ContextDTO contextDTO) {
+/*
+        List<DessertDTO> dessertDTOS = new ArrayList<>();
+        DessertDTO dessertBrownie = new DessertDTO();
+        dessertBrownie.setName("Brownie");
+        dessertBrownie.setPrice("3€");
+        dessertBrownie.setImage("https://lalignegourmande.fr/wp-content/uploads/2020/09/BROWNIE-FULL-CHOCOLATE-scaled.jpg");
+        dessertDTOS.add(dessertBrownie);
+
+        DessertDTO dessertTiramisu = new DessertDTO();
+        dessertBrownie.setName("Tiramisu");
+        dessertBrownie.setPrice("4€");
+        dessertBrownie.setImage("https://www.galbani.fr/wp-content/uploads/2017/07/le_veritable_tiramisu_par_il_gusto_italiano_0.png");
+        dessertDTOS.add(dessertTiramisu);
+*/
 
         WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
 
@@ -53,10 +67,28 @@ public class PizzaService {
         messageSimpleResponse.setPlatform("ACTIONS_ON_GOOGLE");
         SimpleResponsesDTO simpleResponsesDTO = new SimpleResponsesDTO();
         SimpleResponseDTO simpleResponseDTO = new SimpleResponseDTO();
-        simpleResponseDTO.setTextToSpeech("Un supplément ? ");
+        simpleResponseDTO.setTextToSpeech("Un supplément ? avec votre pizza " + contextDTO.getParameters().get("BASE") + " ?");
         simpleResponsesDTO.setSimpleResponses(List.of(simpleResponseDTO));
         messageSimpleResponse.setSimpleResponses(simpleResponsesDTO);
         messageDTOList.add(messageSimpleResponse);
+
+
+        MessageDTO messageDTO2 = new MessageDTO();
+        messageDTO2.setPlatform("ACTIONS_ON_GOOGLE");
+        SuggestionsDTO suggestionsDTO = new SuggestionsDTO();
+
+        SuggestionDTO suggestionDTOoui = new SuggestionDTO();
+        suggestionDTOoui.setTitle("oui");
+        suggestionsDTO.addSuggestion(suggestionDTOoui);
+
+        SuggestionDTO suggestionDTOnon = new SuggestionDTO();
+        suggestionDTOnon.setTitle("non");
+        suggestionsDTO.addSuggestion(suggestionDTOnon);
+
+        messageDTO2.setSuggestions(suggestionsDTO);
+        messageDTOList.add(messageDTO2);
+
+        webhookReponseDTO.setFulfillmentMessages(messageDTOList);
 
         return webhookReponseDTO;
     }
@@ -77,7 +109,7 @@ public class PizzaService {
         pizzaTomate.add(pizzaROYALE);
 
         List<PizzaDTO> pizzaCreme = new ArrayList<>();
-        PizzaDTO pizzaSAUMON= new PizzaDTO();
+        PizzaDTO pizzaSAUMON = new PizzaDTO();
         pizzaMARGUERITE.setName("SAUMON");
         pizzaMARGUERITE.setPrice("20,00€");
         pizzaMARGUERITE.setImage("https://www.yumelise.fr/wp-content/uploads/2021/06/pizza-saumon-fume-500x500.jpg");
