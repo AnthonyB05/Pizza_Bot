@@ -1,5 +1,6 @@
 package fr.ab.MovieAssistant.Service;
 
+import fr.ab.MovieAssistant.DTO.DessertDTO;
 import fr.ab.MovieAssistant.DTO.ImageDTO;
 import fr.ab.MovieAssistant.DTO.PizzaDTO;
 import fr.ab.MovieAssistant.DTO.Request.ContextDTO;
@@ -45,20 +46,6 @@ public class PizzaService {
     }
 
     private WebhookReponseDTO getChoice(ContextDTO contextDTO) {
-/*
-        List<DessertDTO> dessertDTOS = new ArrayList<>();
-        DessertDTO dessertBrownie = new DessertDTO();
-        dessertBrownie.setName("Brownie");
-        dessertBrownie.setPrice("3€");
-        dessertBrownie.setImage("https://lalignegourmande.fr/wp-content/uploads/2020/09/BROWNIE-FULL-CHOCOLATE-scaled.jpg");
-        dessertDTOS.add(dessertBrownie);
-
-        DessertDTO dessertTiramisu = new DessertDTO();
-        dessertBrownie.setName("Tiramisu");
-        dessertBrownie.setPrice("4€");
-        dessertBrownie.setImage("https://www.galbani.fr/wp-content/uploads/2017/07/le_veritable_tiramisu_par_il_gusto_italiano_0.png");
-        dessertDTOS.add(dessertTiramisu);
-*/
 
         WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
 
@@ -110,99 +97,158 @@ public class PizzaService {
 
         List<PizzaDTO> pizzaCreme = new ArrayList<>();
         PizzaDTO pizzaSAUMON = new PizzaDTO();
-        pizzaMARGUERITE.setName("SAUMON");
-        pizzaMARGUERITE.setPrice("20,00€");
-        pizzaMARGUERITE.setImage("https://www.yumelise.fr/wp-content/uploads/2021/06/pizza-saumon-fume-500x500.jpg");
-        pizzaTomate.add(pizzaMARGUERITE);
+        pizzaSAUMON.setName("SAUMON");
+        pizzaSAUMON.setPrice("20,00€");
+        pizzaSAUMON.setImage("https://www.yumelise.fr/wp-content/uploads/2021/06/pizza-saumon-fume-500x500.jpg");
+        pizzaCreme.add(pizzaSAUMON);
 
         PizzaDTO pizzaHAWAIENNE = new PizzaDTO();
-        pizzaROYALE.setName("HAWAIENNE");
-        pizzaROYALE.setPrice("25,00€");
-        pizzaROYALE.setImage("https://assets.afcdn.com/recipe/20170328/63885_w1024h576c1cx1500cy1000.webp");
-        pizzaTomate.add(pizzaROYALE);
+        pizzaHAWAIENNE.setName("HAWAIENNE");
+        pizzaHAWAIENNE.setPrice("25,00€");
+        pizzaHAWAIENNE.setImage("https://assets.afcdn.com/recipe/20170328/63885_w1024h576c1cx1500cy1000.webp");
+        pizzaCreme.add(pizzaHAWAIENNE);
 
         List<PizzaDTO> pizzaSucre = new ArrayList<>();
         PizzaDTO pizzaNUTELLA = new PizzaDTO();
-        pizzaMARGUERITE.setName("NUTELLA");
-        pizzaMARGUERITE.setPrice("27,00€");
-        pizzaMARGUERITE.setImage("https://cdn.shopify.com/s/files/1/0571/4136/2868/articles/four_a_pizza_recette_giuliz_nutella_noisettes_1200x1200.jpg?v=1637559828");
-        pizzaTomate.add(pizzaMARGUERITE);
+        pizzaNUTELLA.setName("NUTELLA");
+        pizzaNUTELLA.setPrice("27,00€");
+        pizzaNUTELLA.setImage("https://cdn.shopify.com/s/files/1/0571/4136/2868/articles/four_a_pizza_recette_giuliz_nutella_noisettes_1200x1200.jpg?v=1637559828");
+        pizzaSucre.add(pizzaNUTELLA);
 
         PizzaDTO pizzaFruit = new PizzaDTO();
-        pizzaROYALE.setName("Fruit");
-        pizzaROYALE.setPrice("30,00€");
-        pizzaROYALE.setImage("https://www.fashioncooking.fr/wp-content/uploads/2020/06/sweet-pizza-aux-fruits.jpg");
-        pizzaTomate.add(pizzaROYALE);
+        pizzaFruit.setName("Fruit");
+        pizzaFruit.setPrice("30,00€");
+        pizzaFruit.setImage("https://www.fashioncooking.fr/wp-content/uploads/2020/06/sweet-pizza-aux-fruits.jpg");
+        pizzaSucre.add(pizzaFruit);
 
 
-        WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
+        List<DessertDTO> dessertDTOS = new ArrayList<>();
+        DessertDTO dessertBrownie = new DessertDTO();
+        dessertBrownie.setName("Brownie");
+        dessertBrownie.setPrice("3€");
+        dessertBrownie.setImage("https://lalignegourmande.fr/wp-content/uploads/2020/09/BROWNIE-FULL-CHOCOLATE-scaled.jpg");
+        dessertDTOS.add(dessertBrownie);
 
-        List<MessageDTO> messageDTOList = new ArrayList<>();
-        MessageDTO messageSimpleResponse = new MessageDTO();
-        messageSimpleResponse.setPlatform("ACTIONS_ON_GOOGLE");
-        SimpleResponsesDTO simpleResponsesDTO = new SimpleResponsesDTO();
-        SimpleResponseDTO simpleResponseDTO = new SimpleResponseDTO();
-        simpleResponseDTO.setTextToSpeech("Voici les pizzas que je te propose !!");
-        simpleResponsesDTO.setSimpleResponses(List.of(simpleResponseDTO));
-        messageSimpleResponse.setSimpleResponses(simpleResponsesDTO);
-        messageDTOList.add(messageSimpleResponse);
+        DessertDTO dessertTiramisu = new DessertDTO();
+        dessertBrownie.setName("Tiramisu");
+        dessertBrownie.setPrice("4€");
+        dessertBrownie.setImage("https://www.galbani.fr/wp-content/uploads/2017/07/le_veritable_tiramisu_par_il_gusto_italiano_0.png");
+        dessertDTOS.add(dessertTiramisu);
 
-        MessageDTO messageCarousel = new MessageDTO();
-        messageCarousel.setPlatform("ACTIONS_ON_GOOGLE");
-        CarouselSelectDTO carouselSelectDTO = new CarouselSelectDTO();
-        List<ItemDTO> itemDTOList = new ArrayList<>();
 
-        if (base.equals("tomate")) {
-            for (PizzaDTO pizzaDTO : pizzaTomate) {
+        if (base.equals("oui")) {
+
+            WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
+
+            List<MessageDTO> messageDTOList = new ArrayList<>();
+            MessageDTO messageSimpleResponse = new MessageDTO();
+            messageSimpleResponse.setPlatform("ACTIONS_ON_GOOGLE");
+            SimpleResponsesDTO simpleResponsesDTO = new SimpleResponsesDTO();
+            SimpleResponseDTO simpleResponseDTO = new SimpleResponseDTO();
+            simpleResponseDTO.setTextToSpeech("Voici les desserts que je te propose !!");
+            simpleResponsesDTO.setSimpleResponses(List.of(simpleResponseDTO));
+            messageSimpleResponse.setSimpleResponses(simpleResponsesDTO);
+            messageDTOList.add(messageSimpleResponse);
+
+            MessageDTO messageCarousel = new MessageDTO();
+            messageCarousel.setPlatform("ACTIONS_ON_GOOGLE");
+            CarouselSelectDTO carouselSelectDTO = new CarouselSelectDTO();
+            List<ItemDTO> itemDTOList = new ArrayList<>();
+
+            for (DessertDTO dessertDTO : dessertDTOS) {
                 ItemDTO itemDTO = new ItemDTO();
                 SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
-                selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
-                selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
-                itemDTO.setTitle(pizzaDTO.getName());
-                itemDTO.setDescription(pizzaDTO.getPrice());
+                selectItemInfoDTO.setKey(dessertDTO.getName().toString());
+                selectItemInfoDTO.setSynonyms(List.of(dessertDTO.getName()));
+                itemDTO.setTitle(dessertDTO.getName());
+                itemDTO.setDescription(dessertDTO.getPrice());
                 ImageDTO imageDTO = new ImageDTO();
-                imageDTO.setImageUri(pizzaDTO.getImage());
-                imageDTO.setAccessibilityText(pizzaDTO.getName());
+                imageDTO.setImageUri(dessertDTO.getImage());
+                imageDTO.setAccessibilityText(dessertDTO.getName());
                 itemDTO.setImage(imageDTO);
                 itemDTOList.add(itemDTO);
             }
-        } else if (base.equals("crème")) {
-            for (PizzaDTO pizzaDTO : pizzaCreme) {
-                ItemDTO itemDTO = new ItemDTO();
-                SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
-                selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
-                selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
-                itemDTO.setInfo(selectItemInfoDTO);
-                itemDTO.setTitle(pizzaDTO.getName());
-                itemDTO.setDescription(pizzaDTO.getPrice());
-                ImageDTO imageDTO = new ImageDTO();
-                imageDTO.setImageUri(pizzaDTO.getImage());
-                imageDTO.setAccessibilityText(pizzaDTO.getName());
-                itemDTO.setImage(imageDTO);
-                itemDTOList.add(itemDTO);
+            carouselSelectDTO.setItems(itemDTOList);
+            messageCarousel.setCarouselSelect(carouselSelectDTO);
+            messageDTOList.add(messageCarousel);
+
+            webhookReponseDTO.setFulfillmentMessages(messageDTOList);
+            return webhookReponseDTO;
+        } else if (base.equals("non")) {
+            WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
+            //TODO calcul
+            return webhookReponseDTO;
+        } else {
+            WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
+
+            List<MessageDTO> messageDTOList = new ArrayList<>();
+            MessageDTO messageSimpleResponse = new MessageDTO();
+            messageSimpleResponse.setPlatform("ACTIONS_ON_GOOGLE");
+            SimpleResponsesDTO simpleResponsesDTO = new SimpleResponsesDTO();
+            SimpleResponseDTO simpleResponseDTO = new SimpleResponseDTO();
+            simpleResponseDTO.setTextToSpeech("Voici les pizzas que je te propose !!");
+            simpleResponsesDTO.setSimpleResponses(List.of(simpleResponseDTO));
+            messageSimpleResponse.setSimpleResponses(simpleResponsesDTO);
+            messageDTOList.add(messageSimpleResponse);
+
+            MessageDTO messageCarousel = new MessageDTO();
+            messageCarousel.setPlatform("ACTIONS_ON_GOOGLE");
+            CarouselSelectDTO carouselSelectDTO = new CarouselSelectDTO();
+            List<ItemDTO> itemDTOList = new ArrayList<>();
+
+            if (base.equals("tomate")) {
+                for (PizzaDTO pizzaDTO : pizzaTomate) {
+                    ItemDTO itemDTO = new ItemDTO();
+                    SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
+                    selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
+                    selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
+                    itemDTO.setTitle(pizzaDTO.getName());
+                    itemDTO.setDescription(pizzaDTO.getPrice());
+                    ImageDTO imageDTO = new ImageDTO();
+                    imageDTO.setImageUri(pizzaDTO.getImage());
+                    imageDTO.setAccessibilityText(pizzaDTO.getName());
+                    itemDTO.setImage(imageDTO);
+                    itemDTOList.add(itemDTO);
+                }
+            } else if (base.equals("creme")) {
+                for (PizzaDTO pizzaDTO : pizzaCreme) {
+                    ItemDTO itemDTO = new ItemDTO();
+                    SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
+                    selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
+                    selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
+                    itemDTO.setInfo(selectItemInfoDTO);
+                    itemDTO.setTitle(pizzaDTO.getName());
+                    itemDTO.setDescription(pizzaDTO.getPrice());
+                    ImageDTO imageDTO = new ImageDTO();
+                    imageDTO.setImageUri(pizzaDTO.getImage());
+                    imageDTO.setAccessibilityText(pizzaDTO.getName());
+                    itemDTO.setImage(imageDTO);
+                    itemDTOList.add(itemDTO);
+                }
+            } else if (base.equals("sucre")) {
+                for (PizzaDTO pizzaDTO : pizzaSucre) {
+                    ItemDTO itemDTO = new ItemDTO();
+                    SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
+                    selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
+                    selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
+                    itemDTO.setTitle(pizzaDTO.getName());
+                    itemDTO.setDescription(pizzaDTO.getPrice());
+                    ImageDTO imageDTO = new ImageDTO();
+                    imageDTO.setImageUri(pizzaDTO.getImage());
+                    imageDTO.setAccessibilityText(pizzaDTO.getName());
+                    itemDTO.setImage(imageDTO);
+                    itemDTOList.add(itemDTO);
+                }
             }
-        } else if (base.equals("sucre")) {
-            for (PizzaDTO pizzaDTO : pizzaSucre) {
-                ItemDTO itemDTO = new ItemDTO();
-                SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
-                selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
-                selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
-                itemDTO.setTitle(pizzaDTO.getName());
-                itemDTO.setDescription(pizzaDTO.getPrice());
-                ImageDTO imageDTO = new ImageDTO();
-                imageDTO.setImageUri(pizzaDTO.getImage());
-                imageDTO.setAccessibilityText(pizzaDTO.getName());
-                itemDTO.setImage(imageDTO);
-                itemDTOList.add(itemDTO);
-            }
+
+            carouselSelectDTO.setItems(itemDTOList);
+            messageCarousel.setCarouselSelect(carouselSelectDTO);
+            messageDTOList.add(messageCarousel);
+
+            webhookReponseDTO.setFulfillmentMessages(messageDTOList);
+            return webhookReponseDTO;
+
         }
-
-        carouselSelectDTO.setItems(itemDTOList);
-        messageCarousel.setCarouselSelect(carouselSelectDTO);
-        messageDTOList.add(messageCarousel);
-
-        webhookReponseDTO.setFulfillmentMessages(messageDTOList);
-        return webhookReponseDTO;
     }
 
     public WebhookReponseDTO getbase(Boolean error) {
@@ -246,3 +292,4 @@ public class PizzaService {
         return webhookReponseDTO;
     }
 }
+
