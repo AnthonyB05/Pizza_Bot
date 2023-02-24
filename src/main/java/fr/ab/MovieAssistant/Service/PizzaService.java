@@ -2,9 +2,11 @@ package fr.ab.MovieAssistant.Service;
 
 import fr.ab.MovieAssistant.DTO.ImageDTO;
 import fr.ab.MovieAssistant.DTO.PizzaDTO;
+import fr.ab.MovieAssistant.DTO.Request.ContextDTO;
 import fr.ab.MovieAssistant.DTO.Request.QueryRequestDTO;
 import fr.ab.MovieAssistant.DTO.Response.Message.Carousel.CarouselSelectDTO;
 import fr.ab.MovieAssistant.DTO.Response.Message.Carousel.ItemDTO;
+import fr.ab.MovieAssistant.DTO.Response.Message.Carousel.SelectItemInfoDTO;
 import fr.ab.MovieAssistant.DTO.Response.Message.MessageDTO;
 import fr.ab.MovieAssistant.DTO.Response.Message.SimpleResponse.SimpleResponseDTO;
 import fr.ab.MovieAssistant.DTO.Response.Message.SimpleResponse.SimpleResponsesDTO;
@@ -25,11 +27,38 @@ public class PizzaService {
     public WebhookReponseDTO getPizza(QueryRequestDTO queryRequestDTO) {
 
         if (queryRequestDTO.getQueryResult().getParameters().getBase() == null) {
+            List<ContextDTO> context = queryRequestDTO.getQueryResult().getOutputContexts();
+            for (ContextDTO contextDTO : context) {
+                if(contextDTO.getParameters().containsKey("OPTION")) {
+                    return this.getExplainPizza(contextDTO);
+                }
+            }
             return getbase(false);
-        } else {
-            return getPizzaByBase(queryRequestDTO.getQueryResult().getParameters().getBase().toLowerCase());
         }
 
+        if(queryRequestDTO.getQueryResult().getParameters().getBase().equals("")){
+            return getbase(false);
+        }
+
+        return getPizzaByBase(queryRequestDTO.getQueryResult().getParameters().getBase().toLowerCase());
+
+    }
+
+    private WebhookReponseDTO getExplainPizza(ContextDTO contextDTO) {
+
+        WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
+
+        List<MessageDTO> messageDTOList = new ArrayList<>();
+        MessageDTO messageSimpleResponse = new MessageDTO();
+        messageSimpleResponse.setPlatform("ACTIONS_ON_GOOGLE");
+        SimpleResponsesDTO simpleResponsesDTO = new SimpleResponsesDTO();
+        SimpleResponseDTO simpleResponseDTO = new SimpleResponseDTO();
+        simpleResponseDTO.setTextToSpeech("Un supplément ? ");
+        simpleResponsesDTO.setSimpleResponses(List.of(simpleResponseDTO));
+        messageSimpleResponse.setSimpleResponses(simpleResponsesDTO);
+        messageDTOList.add(messageSimpleResponse);
+
+        return webhookReponseDTO;
     }
 
     private WebhookReponseDTO getPizzaByBase(String base) {
@@ -94,6 +123,9 @@ public class PizzaService {
         if (base.equals("tomate")) {
             for (PizzaDTO pizzaDTO : pizzaTomate) {
                 ItemDTO itemDTO = new ItemDTO();
+                SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
+                selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
+                selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
                 itemDTO.setTitle(pizzaDTO.getName());
                 itemDTO.setDescription(pizzaDTO.getPrice());
                 ImageDTO imageDTO = new ImageDTO();
@@ -105,6 +137,10 @@ public class PizzaService {
         } else if (base.equals("crème")) {
             for (PizzaDTO pizzaDTO : pizzaCreme) {
                 ItemDTO itemDTO = new ItemDTO();
+                SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
+                selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
+                selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
+                itemDTO.setInfo(selectItemInfoDTO);
                 itemDTO.setTitle(pizzaDTO.getName());
                 itemDTO.setDescription(pizzaDTO.getPrice());
                 ImageDTO imageDTO = new ImageDTO();
@@ -116,6 +152,9 @@ public class PizzaService {
         } else if (base.equals("sucre")) {
             for (PizzaDTO pizzaDTO : pizzaSucre) {
                 ItemDTO itemDTO = new ItemDTO();
+                SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
+                selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
+                selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
                 itemDTO.setTitle(pizzaDTO.getName());
                 itemDTO.setDescription(pizzaDTO.getPrice());
                 ImageDTO imageDTO = new ImageDTO();
