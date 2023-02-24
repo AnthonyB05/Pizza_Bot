@@ -1,6 +1,10 @@
 package fr.ab.MovieAssistant.Service;
 
+import fr.ab.MovieAssistant.DTO.ImageDTO;
+import fr.ab.MovieAssistant.DTO.PizzaDTO;
 import fr.ab.MovieAssistant.DTO.Request.QueryRequestDTO;
+import fr.ab.MovieAssistant.DTO.Response.Message.Carousel.CarouselSelectDTO;
+import fr.ab.MovieAssistant.DTO.Response.Message.Carousel.ItemDTO;
 import fr.ab.MovieAssistant.DTO.Response.Message.MessageDTO;
 import fr.ab.MovieAssistant.DTO.Response.Message.SimpleResponse.SimpleResponseDTO;
 import fr.ab.MovieAssistant.DTO.Response.Message.SimpleResponse.SimpleResponsesDTO;
@@ -15,25 +19,61 @@ import java.util.List;
 @Service
 public class PizzaService {
 
-    private final List<String> genres = List.of("Tomate", "Crème", "Sucre");
+    private final List<String> bases = List.of("Tomate", "Crème", "Sucre");
 
-    private final List<List<String>> tomate = List.of(List.of("MARGUERITE", "16,00€"), List.of("ROYALE", "16,00€"), List.of("BOLOGNAISE", "16,00€"));
-    private final List<String> creme = List.of("SAUMON", "MONTAGNARDE", "HAWAIENNE");
-    private final List<String> sucre = List.of("NUTELLA", "FRAISE", "CHOCOLAT");
 
     public WebhookReponseDTO getPizza(QueryRequestDTO queryRequestDTO) {
 
-       /* if (queryRequestDTO.getQueryResult().getParameters().getBase() == null) {
+        if (queryRequestDTO.getQueryResult().getParameters().getBase() == null) {
             return getbase(false);
         } else {
             return getPizzaByBase(queryRequestDTO.getQueryResult().getParameters().getBase().toLowerCase());
-        }*/
+        }
 
-        WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
-        return webhookReponseDTO;
     }
 
-/*    private WebhookReponseDTO getPizzaByBase(String toLowerCase) {
+    private WebhookReponseDTO getPizzaByBase(String base) {
+
+        List<PizzaDTO> pizzaTomate = new ArrayList<>();
+        PizzaDTO pizzaMARGUERITE = new PizzaDTO();
+        pizzaMARGUERITE.setName("MARGUERITE");
+        pizzaMARGUERITE.setPrice("16,00€");
+        pizzaMARGUERITE.setImage("https://assets.afcdn.com/recipe/20200206/107152_w1024h1024c1cx176cy267.webp");
+        pizzaTomate.add(pizzaMARGUERITE);
+
+        PizzaDTO pizzaROYALE = new PizzaDTO();
+        pizzaROYALE.setName("ROYALE");
+        pizzaROYALE.setPrice("15,00€");
+        pizzaROYALE.setImage("https://img.cuisineaz.com/660x660/2013/12/20/i95731-pizza-royale.jpg");
+        pizzaTomate.add(pizzaROYALE);
+
+        List<PizzaDTO> pizzaCreme = new ArrayList<>();
+        PizzaDTO pizzaSAUMON= new PizzaDTO();
+        pizzaMARGUERITE.setName("SAUMON");
+        pizzaMARGUERITE.setPrice("20,00€");
+        pizzaMARGUERITE.setImage("https://www.yumelise.fr/wp-content/uploads/2021/06/pizza-saumon-fume-500x500.jpg");
+        pizzaTomate.add(pizzaMARGUERITE);
+
+        PizzaDTO pizzaHAWAIENNE = new PizzaDTO();
+        pizzaROYALE.setName("HAWAIENNE");
+        pizzaROYALE.setPrice("25,00€");
+        pizzaROYALE.setImage("https://assets.afcdn.com/recipe/20170328/63885_w1024h576c1cx1500cy1000.webp");
+        pizzaTomate.add(pizzaROYALE);
+
+        List<PizzaDTO> pizzaSucre = new ArrayList<>();
+        PizzaDTO pizzaNUTELLA = new PizzaDTO();
+        pizzaMARGUERITE.setName("NUTELLA");
+        pizzaMARGUERITE.setPrice("27,00€");
+        pizzaMARGUERITE.setImage("https://cdn.shopify.com/s/files/1/0571/4136/2868/articles/four_a_pizza_recette_giuliz_nutella_noisettes_1200x1200.jpg?v=1637559828");
+        pizzaTomate.add(pizzaMARGUERITE);
+
+        PizzaDTO pizzaFruit = new PizzaDTO();
+        pizzaROYALE.setName("Fruit");
+        pizzaROYALE.setPrice("30,00€");
+        pizzaROYALE.setImage("https://www.fashioncooking.fr/wp-content/uploads/2020/06/sweet-pizza-aux-fruits.jpg");
+        pizzaTomate.add(pizzaROYALE);
+
+
         WebhookReponseDTO webhookReponseDTO = new WebhookReponseDTO();
 
         List<MessageDTO> messageDTOList = new ArrayList<>();
@@ -51,35 +91,48 @@ public class PizzaService {
         CarouselSelectDTO carouselSelectDTO = new CarouselSelectDTO();
         List<ItemDTO> itemDTOList = new ArrayList<>();
 
-        if (toLowerCase.equals("tomate")) {
-
-
-        } else if (toLowerCase.equals("crème")) {
-            for (String pizza : creme) {
-                MessageDTO messageSuggestion = new MessageDTO();
-                messageSuggestion.setPlatform("ACTIONS_ON_GOOGLE");
-                SuggestionsDTO suggestionsDTO = new SuggestionsDTO();
-                SuggestionDTO suggestionDTO = new SuggestionDTO();
-                suggestionDTO.setTitle(pizza);
-                suggestionsDTO.setSuggestions(List.of(suggestionDTO));
-                messageSuggestion.setSuggestions(suggestionsDTO);
-                messageDTOList.add(messageSuggestion);
+        if (base.equals("tomate")) {
+            for (PizzaDTO pizzaDTO : pizzaTomate) {
+                ItemDTO itemDTO = new ItemDTO();
+                itemDTO.setTitle(pizzaDTO.getName());
+                itemDTO.setDescription(pizzaDTO.getPrice());
+                ImageDTO imageDTO = new ImageDTO();
+                imageDTO.setImageUri(pizzaDTO.getImage());
+                imageDTO.setAccessibilityText(pizzaDTO.getName());
+                itemDTO.setImage(imageDTO);
+                itemDTOList.add(itemDTO);
             }
-        } else if (toLowerCase.equals("sucre")) {
-            for (String pizza : sucre) {
-                MessageDTO messageSuggestion = new MessageDTO();
-                messageSuggestion.setPlatform("ACTIONS_ON_GOOGLE");
-                SuggestionsDTO suggestionsDTO = new SuggestionsDTO();
-                SuggestionDTO suggestionDTO = new SuggestionDTO();
-                suggestionDTO.setTitle(pizza);
-                suggestionsDTO.setSuggestions(List.of(suggestionDTO));
-                messageSuggestion.setSuggestions(suggestionsDTO);
-                messageDTOList.add(messageSuggestion);
+        } else if (base.equals("crème")) {
+            for (PizzaDTO pizzaDTO : pizzaCreme) {
+                ItemDTO itemDTO = new ItemDTO();
+                itemDTO.setTitle(pizzaDTO.getName());
+                itemDTO.setDescription(pizzaDTO.getPrice());
+                ImageDTO imageDTO = new ImageDTO();
+                imageDTO.setImageUri(pizzaDTO.getImage());
+                imageDTO.setAccessibilityText(pizzaDTO.getName());
+                itemDTO.setImage(imageDTO);
+                itemDTOList.add(itemDTO);
+            }
+        } else if (base.equals("sucre")) {
+            for (PizzaDTO pizzaDTO : pizzaSucre) {
+                ItemDTO itemDTO = new ItemDTO();
+                itemDTO.setTitle(pizzaDTO.getName());
+                itemDTO.setDescription(pizzaDTO.getPrice());
+                ImageDTO imageDTO = new ImageDTO();
+                imageDTO.setImageUri(pizzaDTO.getImage());
+                imageDTO.setAccessibilityText(pizzaDTO.getName());
+                itemDTO.setImage(imageDTO);
+                itemDTOList.add(itemDTO);
             }
         }
 
+        carouselSelectDTO.setItems(itemDTOList);
+        messageCarousel.setCarouselSelect(carouselSelectDTO);
+        messageDTOList.add(messageCarousel);
 
-    }*/
+        webhookReponseDTO.setFulfillmentMessages(messageDTOList);
+        return webhookReponseDTO;
+    }
 
     public WebhookReponseDTO getbase(Boolean error) {
 
@@ -109,9 +162,9 @@ public class PizzaService {
         MessageDTO messageDTO2 = new MessageDTO();
         messageDTO2.setPlatform("ACTIONS_ON_GOOGLE");
         SuggestionsDTO suggestionsDTO = new SuggestionsDTO();
-        for (String genre : genres) {
+        for (String base : bases) {
             SuggestionDTO suggestionDTO = new SuggestionDTO();
-            suggestionDTO.setTitle(genre);
+            suggestionDTO.setTitle(base);
             suggestionsDTO.addSuggestion(suggestionDTO);
         }
         messageDTO2.setSuggestions(suggestionsDTO);
