@@ -160,6 +160,7 @@ public class PizzaService {
                 SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
                 selectItemInfoDTO.setKey(dessertDTO.getName().toString());
                 selectItemInfoDTO.setSynonyms(List.of(dessertDTO.getName()));
+                itemDTO.setInfo(selectItemInfoDTO);
                 itemDTO.setTitle(dessertDTO.getName());
                 itemDTO.setDescription(dessertDTO.getPrice());
                 ImageDTO imageDTO = new ImageDTO();
@@ -202,6 +203,7 @@ public class PizzaService {
                     SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
                     selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
                     selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
+                    itemDTO.setInfo(selectItemInfoDTO);
                     itemDTO.setTitle(pizzaDTO.getName());
                     itemDTO.setDescription(pizzaDTO.getPrice());
                     ImageDTO imageDTO = new ImageDTO();
@@ -231,6 +233,7 @@ public class PizzaService {
                     SelectItemInfoDTO selectItemInfoDTO = new SelectItemInfoDTO();
                     selectItemInfoDTO.setKey(pizzaDTO.getName().toString());
                     selectItemInfoDTO.setSynonyms(List.of(pizzaDTO.getName()));
+                    itemDTO.setInfo(selectItemInfoDTO);
                     itemDTO.setTitle(pizzaDTO.getName());
                     itemDTO.setDescription(pizzaDTO.getPrice());
                     ImageDTO imageDTO = new ImageDTO();
