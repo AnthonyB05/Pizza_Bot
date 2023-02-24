@@ -1,1 +1,2 @@
-# Pizza_Bot
+# MovieAssistant
+assistant chatbot pour les films
